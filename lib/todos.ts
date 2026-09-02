@@ -1,43 +1,35 @@
 import { Todo } from '@/types/todo';
 
-export const todos: Todo[] = [
+export const initialDummyTodos: Todo[] = [
   {
     id: 1,
-    title: 'Belajar React Server Components (RSC)',
-    description: 'Mempelajari konsep dasar Server Components pada Next.js dan perbedaannya dengan Client Components...',
+    title: 'Membuat Struktur Project Next.js',
+    description: 'Mengatur folder app router, components, dan styling.',
     completed: true,
-    createdAt: '2026-08-20',
+    createdAt: '2026-03-01',
   },
   {
     id: 2,
-    title: 'Memahami Next.js App Router',
-    description: 'Mempelajari struktur routing berbasis folder, dynamic route [id], layout, loading, dan error handling.',
-    completed: true,
-    createdAt: '2026-08-21',
+    title: 'Integrasi Local Storage Cache',
+    description: 'Membuat custom hook useLocalStorage untuk simpan state.',
+    completed: false,
+    createdAt: '2026-03-02',
   },
   {
     id: 3,
-    title: 'Membuat Aplikasi Todo List',
-    description: 'Praktik membuat CRUD Todo List sederhana menggunakan Next.js App Router.',
+    title: 'Integrasi API DummyJSON',
+    description: 'Fetch data todo eksternal melalui service layer.',
     completed: false,
-    createdAt: '2026-08-22',
-  },
-  {
-    id: 4,
-    title: 'Eksplorasi Client Components',
-    description: 'Menggunakan directive "use client" untuk interaktivitas seperti form input, onClick handler, dan state.',
-    completed: false,
-    createdAt: '2026-08-22',
+    createdAt: '2026-03-03',
   },
 ];
 
 export async function getTodos(): Promise<Todo[]> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  return todos;
+  return initialDummyTodos;
 }
 
-export async function getTodoDetail(id: string | number): Promise<Todo | null> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  const todo = todos.find((item) => item.id === Number(id));
+export async function getTodoById(id: number | string): Promise<Todo | null> {
+  const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+  const todo = initialDummyTodos.find((t) => t.id === numericId);
   return todo || null;
 }
