@@ -1,21 +1,13 @@
-import React from 'react';
-import TodoForm from './components/TodoForm';
-import TodoList from './components/TodoList';
-import { getTodos } from '@/lib/todos';
+import TodoApp from './components/TodoApp';
 
-export default async function HomePage() {
-  const todos = await getTodos();
-
+export default function HomePage() {
   return (
-    <main className="min-h-screen p-8 bg-gray-100">
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-        <header className="mb-6 border-b pb-4">
-          <h1 className="text-3xl font-bold text-gray-800">Daftar Tugas Saya</h1>
-          <p className="text-sm text-gray-500 mt-1">Kelola tugas harian Anda dengan mudah</p>
-        </header>
-
-        <TodoForm />
-        <TodoList todos={todos} />
+    <main className="flex min-h-screen items-center justify-center bg-gray-50 p-6">
+      <div className="w-full max-w-2xl rounded-2xl border border-gray-100 bg-white p-6 shadow-xl md:p-8">
+        <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">
+          Daftar Tugas (Todo List)
+        </h1>
+        <TodoApp />
       </div>
     </main>
   );

@@ -1,43 +1,32 @@
-import { todoService, FetchTodosParams } from '@/services/todoService';
-import { ApiTodo, TaskItem } from '@/types/api-todo';
+import { todoService } from '@/services/todoService';
+import type { TaskItem } from '@/types/api-todo';
 
-export function formatApiTodoToTask(raw: ApiTodo): TaskItem {
-  return {
-    id: raw.id,
-    title: raw.todo,
-    completed: raw.completed,
-    userId: raw.userId,
-    source: 'dummyjson-api',
-  };
-}
+export type FetchTodosParams = {
+  limit?: number;
+  skip?: number;
+};
 
-export async function getTasks(params?: FetchTodosParams): Promise<{
+export async function getTasks(params: FetchTodosParams = {}): Promise<{
   tasks: TaskItem[];
   total: number;
   limit: number;
   skip: number;
 }> {
-  try {
-    const response = await todoService.fetchTodos(params);
-    const tasks = response.todos.map(formatApiTodoToTask);
-    return {
-      tasks,
-      total: response.total,
-      limit: response.limit,
-      skip: response.skip,
-    };
-  } catch (error) {
-    console.error('[lib/tasks.ts] Error mengambil tasks dari API:', error);
-    throw error;
-  }
+  const todos = await todoService.getTodos();
+  const limit = params.limit ?? todos.length;
+  const skip = params.skip ?? 0;
+  const tasks = todos.slice(skip, skip + limit).map(({ id, title, completed }) => ({
+    id,
+    title,
+    completed,
+  }));
+
+  return { tasks, total: todos.length, limit, skip };
 }
 
 export async function getTaskById(id: number | string): Promise<TaskItem | null> {
-  try {
-    const raw = await todoService.fetchTodoById(id);
-    return formatApiTodoToTask(raw);
-  } catch (error) {
-    console.error(`[lib/tasks.ts] Error mengambil task ID ${id}:`, error);
-    return null;
-  }
+  const todo = await todoService.getTodoById(id);
+  return todo
+    ? { id: todo.id, title: todo.title, completed: todo.completed }
+    : null;
 }

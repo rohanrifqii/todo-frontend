@@ -15,9 +15,7 @@ export interface TodosApiResponse {
 export interface TaskItem {
   id: number;
   title: string;
-  userId: number;
   completed: boolean;
-  source: 'dummyjson-api';
 }
 
 export interface ApiResponse<T = unknown> {

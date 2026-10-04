@@ -35,15 +35,6 @@ export default async function TodoDetailPage({ params }: TodoDetailPageProps) {
               </Badge>
             </div>
 
-            <div className="space-y-2">
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Deskripsi Tugas
-              </h2>
-              <p className="text-sm text-dark-70 leading-relaxed bg-gray-50 p-4 rounded-xl">
-                {todo.description || 'Tidak ada deskripsi tambahan.'}
-              </p>
-            </div>
-
             <div className="pt-4 border-t flex justify-between text-xs text-muted">
               <span>ID: #{todo.id}</span>
               <span>Dibuat: {todo.createdAt}</span>

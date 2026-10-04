@@ -17,7 +17,6 @@ export default function TodoCachedApp({ initialTodos }: TodoCachedAppProps) {
     const newTodo: Todo = {
       id: Date.now(),
       title,
-      description: 'Tugas baru yang tersimpan di localStorage.',
       completed: false,
       createdAt: new Date().toISOString().split('T')[0],
     };
@@ -44,7 +43,7 @@ export default function TodoCachedApp({ initialTodos }: TodoCachedAppProps) {
 
   return (
     <div>
-      <TodoForm onAddTodo={handleAddTodo} />
+      <TodoForm onAdd={handleAddTodo} />
       <div className="flex items-center justify-between text-xs text-gray-500 mb-2 px-1">
         <span className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -60,8 +59,8 @@ export default function TodoCachedApp({ initialTodos }: TodoCachedAppProps) {
       </div>
       <TodoList
         todos={todos}
-        onToggleTodo={handleToggleTodo}
-        onDeleteTodo={handleDeleteTodo}
+        onToggle={handleToggleTodo}
+        onDelete={handleDeleteTodo}
       />
     </div>
   );

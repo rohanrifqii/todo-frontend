@@ -11,6 +11,7 @@ interface ApiTodoListProps {
 
 export default function ApiTodoList({ initialTasks }: ApiTodoListProps) {
   const [tasks, setTasks] = useState<TaskItem[]>(initialTasks);
+  const [error, setError] = useState('');
 
   const handleToggleTask = async (id: number, currentCompleted: boolean) => {
     const targetStatus = !currentCompleted;
@@ -20,14 +21,18 @@ export default function ApiTodoList({ initialTasks }: ApiTodoListProps) {
     );
 
     try {
-      await todoService.updateTodoStatus(id, targetStatus);
+      await todoService.updateTodo(id, { is_completed: targetStatus });
     } catch (err) {
-      console.warn('Simulasi update API gagal:', err);
+      setTasks((prev) =>
+        prev.map((task) => (task.id === id ? { ...task, completed: currentCompleted } : task))
+      );
+      setError(err instanceof Error ? err.message : 'Gagal memperbarui tugas.');
     }
   };
 
   return (
     <div className="space-y-4">
+      {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-dark-70">Daftar Tugas</h2>
         <span className="text-xs bg-gray-70 text-gray-600 px-2.5 py-1 rounded-full font-medium">

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getTasks } from '@/lib/tasks';
-import { todoService } from '@/services/todoService';
-import { ApiResponse } from '@/types/api-todo';
+import type { ApiResponse } from '@/types/api-todo';
 
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
